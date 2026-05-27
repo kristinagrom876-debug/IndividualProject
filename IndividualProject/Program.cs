@@ -3,14 +3,14 @@ using MusicPlayer.Services;
 
 namespace MusicPlayer {
   class Program {
-    private const string commandPlay = "1";
-    private const string commandPause = "2";
-    private const string commandStop = "3";
-    private const string commandNext = "4";
-    private const string commandPrevious = "5";
-    private const string commandShowPlaylist = "6";
-    private const string commandShowStatus = "7";
-    private const string commandExit = "0";
+    private string commandPlay = "1";
+    private string commandPause = "2";
+    private string commandStop = "3";
+    private string commandNext = "4";
+    private string commandPrevious = "5";
+    private string commandShowPlaylist = "6";
+    private string commandShowStatus = "7";
+    private string commandExit = "0";
 
     static void Main(string[] args) {
       MusicPlayer player = new MusicPlayer();
@@ -34,11 +34,32 @@ namespace MusicPlayer {
         Console.Write("\nYour choice: ");
         string choice = Console.ReadLine();
 
-        if (choice == commandExit) {
+        string result = "";
+
+        if (choice == commandPlay) {
+          result = player.Play();
+          Console.WriteLine(result);
+        } else if (choice == commandPause) {
+          result = player.Pause();
+          Console.WriteLine(result);
+        } else if (choice == commandStop) {
+          result = player.Stop();
+          Console.WriteLine(result);
+        } else if (choice == commandNext) {
+          result = player.Next();
+          Console.WriteLine(result);
+        } else if (choice == commandPrevious) {
+          result = player.Previous();
+          Console.WriteLine(result);
+        } else if (choice == commandShowPlaylist) {
+          Console.WriteLine(player.GetPlaylistString());
+        } else if (choice == commandShowStatus) {
+          Console.WriteLine(player.GetStatusString());
+        } else if (choice == commandExit) {
           isRunning = false;
           Console.WriteLine("Goodbye!");
         } else {
-          Console.WriteLine("Command executed");
+          Console.WriteLine("Unknown command!");
         }
       }
     }
