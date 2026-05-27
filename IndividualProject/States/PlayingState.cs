@@ -1,8 +1,12 @@
 ﻿using MusicPlayer.Services;
 
 namespace MusicPlayer.States {
-  class PlayingState : IPlayerState {
-    private string stateName = "PLAYING";
+  public class PlayingState : IPlayerState {
+    private readonly string stateName;
+
+    public PlayingState() {
+      stateName = "PLAYING";
+    }
 
     public string Play(Player player) {
       return "Already playing!";
@@ -30,26 +34,6 @@ namespace MusicPlayer.States {
 
     public string GetStateName() {
       return stateName;
-    }
-
-    string IPlayerState.Play(Player player) {
-      throw new System.NotImplementedException();
-    }
-
-    string IPlayerState.Pause(Player player) {
-      throw new System.NotImplementedException();
-    }
-
-    string IPlayerState.Stop(Player player) {
-      throw new System.NotImplementedException();
-    }
-
-    string IPlayerState.Next(Player player) {
-      throw new System.NotImplementedException();
-    }
-
-    string IPlayerState.Previous(Player player) {
-      throw new System.NotImplementedException();
     }
   }
 }
