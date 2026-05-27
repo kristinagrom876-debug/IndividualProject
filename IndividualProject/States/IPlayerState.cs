@@ -2,11 +2,11 @@
 
 namespace MusicPlayer.States {
   interface IPlayerState {
-    void Play(MusicPlayer player);
-    void Pause(MusicPlayer player);
-    void Stop(MusicPlayer player);
-    void Next(MusicPlayer player);
-    void Previous(MusicPlayer player);
+    string Play(Player player);
+    string Pause(Player player);
+    string Stop(Player player);
+    string Next(Player player);
+    string Previous(Player player);
     string GetStateName();
   }
 }

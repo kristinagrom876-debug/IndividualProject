@@ -3,22 +3,24 @@ using MusicPlayer.Services;
 
 namespace MusicPlayer {
   class Program {
-    private string commandPlay = "1";
-    private string commandPause = "2";
-    private string commandStop = "3";
-    private string commandNext = "4";
-    private string commandPrevious = "5";
-    private string commandShowPlaylist = "6";
-    private string commandShowStatus = "7";
-    private string commandExit = "0";
+    private const string commandPlay = "1";
+    private const string commandPause = "2";
+    private const string commandStop = "3";
+    private const string commandNext = "4";
+    private const string commandPrevious = "5";
+    private const string commandShowPlaylist = "6";
+    private const string commandShowStatus = "7";
+    private const string commandExit = "0";
 
     static void Main(string[] args) {
-      MusicPlayer player = new MusicPlayer();
+      Player player;
+      player = new Player();
 
       Console.WriteLine("=== MUSIC PLAYER ===");
       Console.WriteLine("State pattern - Playing/Paused/Stopped");
 
-      bool isRunning = true;
+      bool isRunning;
+      isRunning = true;
 
       while (isRunning) {
         Console.WriteLine("\n=== COMMANDS ===");
@@ -32,13 +34,16 @@ namespace MusicPlayer {
         Console.WriteLine("0. Exit");
 
         Console.Write("\nYour choice: ");
-        string choice = Console.ReadLine();
+        string choice;
+        choice = Console.ReadLine();
 
-        string result = "";
+        string result;
+        result = "";
 
         if (choice == commandPlay) {
           result = player.Play();
           Console.WriteLine(result);
+          Console.WriteLine($"Now playing: {player.GetCurrentTrackInfo()}");
         } else if (choice == commandPause) {
           result = player.Pause();
           Console.WriteLine(result);
@@ -48,9 +53,11 @@ namespace MusicPlayer {
         } else if (choice == commandNext) {
           result = player.Next();
           Console.WriteLine(result);
+          Console.WriteLine($"Now playing: {player.GetCurrentTrackInfo()}");
         } else if (choice == commandPrevious) {
           result = player.Previous();
           Console.WriteLine(result);
+          Console.WriteLine($"Now playing: {player.GetCurrentTrackInfo()}");
         } else if (choice == commandShowPlaylist) {
           Console.WriteLine(player.GetPlaylistString());
         } else if (choice == commandShowStatus) {
