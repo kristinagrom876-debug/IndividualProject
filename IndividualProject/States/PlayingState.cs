@@ -1,30 +1,31 @@
 ﻿using MusicPlayer.Services;
 
 namespace MusicPlayer.States {
-  class StoppedState : IPlayerState {
-    private string stateName = "STOPPED";
+  class PlayingState : IPlayerState {
+    private string stateName = "PLAYING";
 
     public string Play(MusicPlayer player) {
-      player.SetState(new PlayingState());
-      return "Starting playback...";
+      return "Already playing!";
     }
 
     public string Pause(MusicPlayer player) {
-      return "Cannot pause - player is stopped. Press Play first!";
+      player.SetState(new PausedState());
+      return "Pausing playback...";
     }
 
     public string Stop(MusicPlayer player) {
-      return "Already stopped!";
+      player.SetState(new StoppedState());
+      return "Stopping playback...";
     }
 
     public string Next(MusicPlayer player) {
       player.NextTrack();
-      return "Switching to next track...";
+      return "Skipping to next track...";
     }
 
     public string Previous(MusicPlayer player) {
       player.PreviousTrack();
-      return "Switching to previous track...";
+      return "Going to previous track...";
     }
 
     public string GetStateName() {
