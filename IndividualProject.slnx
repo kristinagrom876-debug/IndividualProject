@@ -3,5 +3,5 @@
     <File Path=".editorconfig" />
     <File Path="Settings.StyleCop.json" />
   </Folder>
-  <Project Path="IndividualProject/IndividualProject.csproj" />
+  <Project Path="IndividualProject/IndividualProject.csproj" Id="34c65ee9-354e-4350-aed1-21314d38f930" />
 </Solution>

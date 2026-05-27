@@ -12,7 +12,6 @@ namespace MusicPlayer {
     private const string CommandShowStatus = "7";
     private const string CommandExit = "0";
 
-#pragma warning disable IDE0060 // Удалите неиспользуемый параметр
     public static void Main(string[] args) {
       Player player;
 
@@ -43,11 +42,6 @@ namespace MusicPlayer {
         choice = Console.ReadLine();
 
         string result;
-
-#pragma warning disable IDE0059 // Ненужное присваивание значения
-        result = string.Empty;
-#pragma warning restore IDE0059 // Ненужное присваивание значения
-
         if (choice == CommandPlay) {
           result = player.Play();
 
