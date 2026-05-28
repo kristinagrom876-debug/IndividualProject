@@ -4,14 +4,26 @@ using MusicPlayer.States;
 
 namespace MusicPlayer.Services {
   public class Player {
-    private const int SecondsInOneMinute = 60;
+    private readonly int secondsInOneMinute = 60;
+    private readonly int firstTrackIndex = 0;
+    private readonly int defaultTrackIndex = 0;
+    private readonly int startTrackNumber = 1;
+
+    private readonly int runawayDurationSeconds = 245;
+    private readonly int singForTheMomentDurationSeconds = 317;
+    private readonly int letMeLoveYouDurationSeconds = 205;
+    private readonly int homeDurationSeconds = 195;
+    private readonly int zooDurationSeconds = 210;
+    private readonly int imEtoNadoDurationSeconds = 180;
+    private readonly int tonuDurationSeconds = 200;
+
     private IPlayerState currentState;
     private List<Track> playlist;
     private int currentTrackIndex;
 
     public Player() {
       currentState = new StoppedState();
-      currentTrackIndex = 0;
+      currentTrackIndex = defaultTrackIndex;
       LoadDefaultPlaylist();
     }
 
@@ -54,14 +66,12 @@ namespace MusicPlayer.Services {
       bool hasNextTrack;
 
       playlistSize = playlist.Count;
-      hasNextTrack = currentTrackIndex + 1 < playlistSize;
+      hasNextTrack = ++currentTrackIndex < playlistSize;
 
-#pragma warning disable IDE0045 // Преобразовать в условное выражение
       if (hasNextTrack) {
         currentTrackIndex = ++currentTrackIndex;
       } else {
-#pragma warning restore IDE0045 // Преобразовать в условное выражение
-        currentTrackIndex = 0;
+        currentTrackIndex = firstTrackIndex;
       }
     }
 
@@ -72,19 +82,22 @@ namespace MusicPlayer.Services {
 
       playlistSize = playlist.Count;
       newTrackIndex = --currentTrackIndex;
-      hasPreviousTrack = newTrackIndex >= 0;
+      hasPreviousTrack = newTrackIndex >= firstTrackIndex;
 
-#pragma warning disable IDE0045 // Преобразовать в условное выражение
       if (hasPreviousTrack) {
         currentTrackIndex = newTrackIndex;
       } else {
-#pragma warning restore IDE0045 // Преобразовать в условное выражение
         currentTrackIndex = --playlistSize;
       }
     }
 
     public Track GetCurrentTrack() {
       Track currentTrack;
+
+      if (currentTrackIndex < firstTrackIndex || currentTrackIndex >= playlist.Count) {
+        currentTrackIndex = defaultTrackIndex;
+      }
+
       currentTrack = playlist[currentTrackIndex];
       return currentTrack;
     }
@@ -96,8 +109,8 @@ namespace MusicPlayer.Services {
       string trackInfo;
 
       current = GetCurrentTrack();
-      minutes = current.DurationSeconds / SecondsInOneMinute;
-      seconds = current.DurationSeconds % SecondsInOneMinute;
+      minutes = current.DurationSeconds / secondsInOneMinute;
+      seconds = current.DurationSeconds % secondsInOneMinute;
       trackInfo = $"{current.Title} - {current.Artist} [{minutes}:{seconds:D2}]";
       return trackInfo;
     }
@@ -106,22 +119,22 @@ namespace MusicPlayer.Services {
       string result;
       result = "\n=== PLAYLIST ===\n";
 
-      for (int trackIndex = 0; trackIndex < playlist.Count; trackIndex++) {
+      for (int trackIndex = firstTrackIndex; trackIndex < playlist.Count; trackIndex++) {
         Track singleTrack;
         int minutes;
         int seconds;
         string currentMarker;
 
         singleTrack = playlist[trackIndex];
-        minutes = singleTrack.DurationSeconds / SecondsInOneMinute;
-        seconds = singleTrack.DurationSeconds % SecondsInOneMinute;
+        minutes = singleTrack.DurationSeconds / secondsInOneMinute;
+        seconds = singleTrack.DurationSeconds % secondsInOneMinute;
         currentMarker = string.Empty;
 
         if (trackIndex == currentTrackIndex) {
           currentMarker = " ▶";
         }
 
-        result += $"{trackIndex + 1}. {singleTrack.Title} - {singleTrack.Artist} [{minutes}:{seconds:D2}]{currentMarker}\n";
+        result += $"{trackIndex + startTrackNumber}. {singleTrack.Title} - {singleTrack.Artist} [{minutes}:{seconds:D2}]{currentMarker}\n";
       }
 
       return result;
@@ -134,15 +147,15 @@ namespace MusicPlayer.Services {
       string result;
 
       current = GetCurrentTrack();
-      minutes = current.DurationSeconds / SecondsInOneMinute;
-      seconds = current.DurationSeconds % SecondsInOneMinute;
+      minutes = current.DurationSeconds / secondsInOneMinute;
+      seconds = current.DurationSeconds % secondsInOneMinute;
 
       result = "\n=== PLAYER STATUS ===\n";
       result += $"State: {currentState.GetStateName()}\n";
       result += $"Current track: {current.Title}\n";
       result += $"Artist: {current.Artist}\n";
       result += $"Duration: {minutes}:{seconds:D2}\n";
-      result += $"Track number: {currentTrackIndex + 1} of {playlist.Count}";
+      result += $"Track number: {currentTrackIndex + startTrackNumber} of {playlist.Count}";
 
       return result;
     }
@@ -152,35 +165,59 @@ namespace MusicPlayer.Services {
 
       Track firstTrack;
       firstTrack = new Track {
-        Title = "Bohemian Rhapsody",
-        Artist = "Queen",
-        DurationSeconds = 355
+        Title = "Runaway",
+        Artist = "Aurora",
+        DurationSeconds = runawayDurationSeconds
       };
       playlist.Add(firstTrack);
 
       Track secondTrack;
       secondTrack = new Track {
-        Title = "Imagine",
-        Artist = "John Lennon",
-        DurationSeconds = 183
+        Title = "Sing For The Moment",
+        Artist = "Eminem",
+        DurationSeconds = singForTheMomentDurationSeconds
       };
       playlist.Add(secondTrack);
 
       Track thirdTrack;
       thirdTrack = new Track {
-        Title = "Billie Jean",
-        Artist = "Michael Jackson",
-        DurationSeconds = 294
+        Title = "Let Me Love You",
+        Artist = "DJ Snake, Sean Paul, Justin Bieber",
+        DurationSeconds = letMeLoveYouDurationSeconds
       };
       playlist.Add(thirdTrack);
 
       Track fourthTrack;
       fourthTrack = new Track {
-        Title = "Like a Rolling Stone",
-        Artist = "Bob Dylan",
-        DurationSeconds = 366
+        Title = "Home",
+        Artist = "Machine Gun Kelly, X Ambassadors, Bebe Rexha",
+        DurationSeconds = homeDurationSeconds
       };
       playlist.Add(fourthTrack);
+
+      Track fifthTrack;
+      fifthTrack = new Track {
+        Title = "ZOO (from Zootopia 2)",
+        Artist = "Shakira",
+        DurationSeconds = zooDurationSeconds
+      };
+      playlist.Add(fifthTrack);
+
+      Track sixthTrack;
+      sixthTrack = new Track {
+        Title = "Им это надо",
+        Artist = "MAYOT",
+        DurationSeconds = imEtoNadoDurationSeconds
+      };
+      playlist.Add(sixthTrack);
+
+      Track seventhTrack;
+      seventhTrack = new Track {
+        Title = "Тону",
+        Artist = "HOLLYFLAME",
+        DurationSeconds = tonuDurationSeconds
+      };
+      playlist.Add(seventhTrack);
     }
   }
 }

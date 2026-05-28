@@ -12,7 +12,7 @@ namespace MusicPlayer {
     private const string CommandShowStatus = "7";
     private const string CommandExit = "0";
 
-    public static void Main(string[] args) {
+    public static void Main() {
       Player player;
 
       player = new Player();
@@ -78,6 +78,5 @@ namespace MusicPlayer {
         }
       }
     }
-#pragma warning restore IDE0060 // Удалите неиспользуемый параметр
   }
 }
