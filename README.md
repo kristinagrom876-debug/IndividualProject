@@ -68,7 +68,6 @@ MusicPlayer/
     Services/ 
         Player.cs 
     Program.cs 
-    MusicPlayer.csproj 
     
 ## Запуск
 
