@@ -3,26 +3,35 @@ using MusicPlayer.Services;
 
 namespace MusicPlayer {
   public class Program {
-    private const string CommandPlay = "1";
-    private const string CommandPause = "2";
-    private const string CommandStop = "3";
-    private const string CommandNext = "4";
-    private const string CommandPrevious = "5";
-    private const string CommandShowPlaylist = "6";
-    private const string CommandShowStatus = "7";
-    private const string CommandExit = "0";
+    private static string commandPlay;
+    private static string commandPause;
+    private static string commandStop;
+    private static string commandNext;
+    private static string commandPrevious;
+    private static string commandShowPlaylist;
+    private static string commandShowStatus;
+    private static string commandExit;
 
     public static void Main() {
       Player player;
+      bool isRunning;
+      string choice;
+      string result;
+
+      commandPlay = "1";
+      commandPause = "2";
+      commandStop = "3";
+      commandNext = "4";
+      commandPrevious = "5";
+      commandShowPlaylist = "6";
+      commandShowStatus = "7";
+      commandExit = "0";
 
       player = new Player();
+      isRunning = true;
 
       Console.WriteLine("=== MUSIC PLAYER ===");
       Console.WriteLine("State pattern - Playing/Paused/Stopped");
-
-      bool isRunning;
-
-      isRunning = true;
 
       while (isRunning) {
         Console.WriteLine("\n=== COMMANDS ===");
@@ -37,41 +46,32 @@ namespace MusicPlayer {
 
         Console.Write("\nYour choice: ");
 
-        string choice;
-
         choice = Console.ReadLine();
 
-        string result;
-        if (choice == CommandPlay) {
+        if (choice == commandPlay) {
           result = player.Play();
-
           Console.WriteLine(result);
           Console.WriteLine($"Now playing: {player.GetCurrentTrackInfo()}");
-        } else if (choice == CommandPause) {
+        } else if (choice == commandPause) {
           result = player.Pause();
-
           Console.WriteLine(result);
-        } else if (choice == CommandStop) {
+        } else if (choice == commandStop) {
           result = player.Stop();
-
           Console.WriteLine(result);
-        } else if (choice == CommandNext) {
+        } else if (choice == commandNext) {
           result = player.Next();
-
           Console.WriteLine(result);
           Console.WriteLine($"Now playing: {player.GetCurrentTrackInfo()}");
-        } else if (choice == CommandPrevious) {
+        } else if (choice == commandPrevious) {
           result = player.Previous();
-
           Console.WriteLine(result);
           Console.WriteLine($"Now playing: {player.GetCurrentTrackInfo()}");
-        } else if (choice == CommandShowPlaylist) {
+        } else if (choice == commandShowPlaylist) {
           Console.WriteLine(player.GetPlaylistString());
-        } else if (choice == CommandShowStatus) {
+        } else if (choice == commandShowStatus) {
           Console.WriteLine(player.GetStatusString());
-        } else if (choice == CommandExit) {
+        } else if (choice == commandExit) {
           isRunning = false;
-
           Console.WriteLine("Goodbye!");
         } else {
           Console.WriteLine("Unknown command!");

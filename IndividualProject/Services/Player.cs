@@ -4,24 +4,37 @@ using MusicPlayer.States;
 
 namespace MusicPlayer.Services {
   public class Player {
-    private readonly int secondsInOneMinute = 60;
-    private readonly int firstTrackIndex = 0;
-    private readonly int defaultTrackIndex = 0;
-    private readonly int startTrackNumber = 1;
+    private readonly int secondsInOneMinute;
+    private readonly int firstTrackIndex;
+    private readonly int defaultTrackIndex;
+    private readonly int startTrackNumber;
 
-    private readonly int runawayDurationSeconds = 245;
-    private readonly int singForTheMomentDurationSeconds = 317;
-    private readonly int letMeLoveYouDurationSeconds = 205;
-    private readonly int homeDurationSeconds = 195;
-    private readonly int zooDurationSeconds = 210;
-    private readonly int imEtoNadoDurationSeconds = 180;
-    private readonly int tonuDurationSeconds = 200;
+    private readonly int runawayDurationSeconds;
+    private readonly int singForTheMomentDurationSeconds;
+    private readonly int letMeLoveYouDurationSeconds;
+    private readonly int homeDurationSeconds;
+    private readonly int zooDurationSeconds;
+    private readonly int imEtoNadoDurationSeconds;
+    private readonly int tonuDurationSeconds;
 
     private IPlayerState currentState;
     private List<Track> playlist;
     private int currentTrackIndex;
 
     public Player() {
+      secondsInOneMinute = 60;
+      firstTrackIndex = 0;
+      defaultTrackIndex = 0;
+      startTrackNumber = 1;
+
+      runawayDurationSeconds = 245;
+      singForTheMomentDurationSeconds = 317;
+      letMeLoveYouDurationSeconds = 205;
+      homeDurationSeconds = 195;
+      zooDurationSeconds = 210;
+      imEtoNadoDurationSeconds = 180;
+      tonuDurationSeconds = 200;
+
       currentState = new StoppedState();
       currentTrackIndex = defaultTrackIndex;
       LoadDefaultPlaylist();
@@ -32,33 +45,23 @@ namespace MusicPlayer.Services {
     }
 
     public string Play() {
-      string message;
-      message = currentState.Play(this);
-      return message;
+      return currentState.Play(this);
     }
 
     public string Pause() {
-      string message;
-      message = currentState.Pause(this);
-      return message;
+      return currentState.Pause(this);
     }
 
     public string Stop() {
-      string message;
-      message = currentState.Stop(this);
-      return message;
+      return currentState.Stop(this);
     }
 
     public string Next() {
-      string message;
-      message = currentState.Next(this);
-      return message;
+      return currentState.Next(this);
     }
 
     public string Previous() {
-      string message;
-      message = currentState.Previous(this);
-      return message;
+      return currentState.Previous(this);
     }
 
     public void NextTrack() {
@@ -69,7 +72,7 @@ namespace MusicPlayer.Services {
       hasNextTrack = ++currentTrackIndex < playlistSize;
 
       if (hasNextTrack) {
-        currentTrackIndex = ++currentTrackIndex;
+        ++currentTrackIndex;
       } else {
         currentTrackIndex = firstTrackIndex;
       }
@@ -85,7 +88,7 @@ namespace MusicPlayer.Services {
       hasPreviousTrack = newTrackIndex >= firstTrackIndex;
 
       if (hasPreviousTrack) {
-        currentTrackIndex = newTrackIndex;
+        --currentTrackIndex;
       } else {
         currentTrackIndex = --playlistSize;
       }
